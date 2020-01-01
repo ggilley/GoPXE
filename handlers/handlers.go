@@ -11,8 +11,9 @@ import (
 	"net/http"
 	"os"
 
+	db "gopxe/bbolt"
+
 	"github.com/gorilla/mux"
-	"github.com/ppetko/gopxe/bbolt"
 )
 
 var (

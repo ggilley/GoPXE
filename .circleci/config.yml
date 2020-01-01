@@ -5,8 +5,8 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/golang:1.11
-    working_directory: /go/src/github.com/ppetko/gopxe
+      - image: circleci/golang:1.13
+    working_directory: /go/src/gopxe
     steps:
       - checkout
       - run: go get -v -t -d ./...

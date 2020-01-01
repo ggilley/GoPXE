@@ -1,7 +1,7 @@
 FROM golang:latest as builder 
-RUN mkdir -p /go/src/github.com/ppetko/gopxe
-ADD . /go/src/github.com/ppetko/gopxe
-WORKDIR /go/src/github.com/ppetko/gopxe
+RUN mkdir -p /go/src/gopxe
+ADD . /go/src/gopxe
+WORKDIR /go/src/gopxe
 RUN go test ./...
 RUN go build -o main .
 
@@ -13,7 +13,7 @@ RUN cp -r /usr/share/syslinux/pxelinux.0 /var/lib/tftpboot
 ADD ./pxebootImages /var/lib/tftpboot
 RUN mkdir -p /gopxe/public ; mkdir /gopxe/ksTempl
 WORKDIR /gopxe
-COPY --from=builder /go/src/github.com/ppetko/gopxe/main /gopxe/
+COPY --from=builder /go/src/gopxe/main /gopxe/
 ADD ./public /gopxe/public
 ADD ./ksTempl /gopxe/ksTempl
 ADD ./start-gopxe.sh /gopxe/

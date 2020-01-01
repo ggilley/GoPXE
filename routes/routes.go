@@ -4,7 +4,7 @@ import (
 	"flag"
 	"net/http"
 
-	h "github.com/ppetko/gopxe/handlers"
+	h "gopxe/handlers"
 
 	//External dependencies
 	"github.com/gorilla/mux"

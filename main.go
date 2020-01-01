@@ -5,8 +5,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/ppetko/gopxe/conf"
-	"github.com/ppetko/gopxe/routes"
+	"gopxe/conf"
+	"gopxe/routes"
 )
 
 // This is the main package
