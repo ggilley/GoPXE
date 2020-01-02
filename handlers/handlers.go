@@ -161,7 +161,7 @@ func PutBA(w http.ResponseWriter, r *http.Request) {
 
 	if !isExists(tftpPath) {
 		http.Error(w, "Couldnt store bootaction", http.StatusNotFound)
-		io.WriteString(w, `{"Status": "Couldn't store bootaction, tftpd path doesn't exist"}`)
+		io.WriteString(w, `{"Status": "Couldn't store bootaction, tftpd path '`+tftpPath+`' doesn't exist"}`)
 		return
 	}
 
