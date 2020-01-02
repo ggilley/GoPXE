@@ -1,7 +1,7 @@
 FROM golang:1.13.1-alpine as builder
 
-# Create appuser
-RUN adduser -u 12345 -D -g '' appuser
+# Create gopxe user (needs to match host)
+RUN adduser -u 2000 -D -g 2000 gopxe
 
 RUN mkdir -p /go/src/gopxe
 ADD . /go/src/gopxe
@@ -10,20 +10,21 @@ RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -a -installsuffix cgo -mo
 
 RUN mkdir -p /gopxe/public
 RUN mkdir -p /gopxe/ksTempl
-RUN chown -R 12345 /gopxe
+RUN chown -R gopxe /gopxe
 
-ADD --chown=12345 ./public /gopxe/public
-ADD --chown=12345 ./ksTempl /gopxe/ksTempl
+ADD --chown=gopxe ./public /gopxe/public
+ADD --chown=gopxe ./ksTempl /gopxe/ksTempl
 
 FROM scratch
 EXPOSE 9090 9090/udp
 
 COPY --from=builder /etc/passwd /etc/passwd
+COPY --from=builder /etc/group /etc/group
 
-USER 12345
+USER gopxe
 
-COPY --chown=12345 --from=builder /go/src/gopxe/gopxe /gopxe/gopxe
-COPY --chown=12345 --from=builder /gopxe /gopxe
+COPY --chown=gopxe --from=builder /go/src/gopxe/gopxe /gopxe/gopxe
+COPY --chown=gopxe --from=builder /gopxe /gopxe
 WORKDIR /gopxe
 
 ENTRYPOINT ["/gopxe/gopxe"]
