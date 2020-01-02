@@ -250,14 +250,16 @@ func PXEBOOT(w http.ResponseWriter, r *http.Request) {
 
 	tftpPath := flag.Lookup("tftpPath").Value.(flag.Getter).Get().(string)
 	ksURL := flag.Lookup("ksURL").Value.(flag.Getter).Get().(string)
-	ksPort := flag.Lookup("port").Value.(flag.Getter).Get().(string)
+	// ksPort := flag.Lookup("port").Value.(flag.Getter).Get().(string)
 	filePath := tftpPath + pxe.UUID
 	var kickstart string
 
 	if pxe.IP != "" && pxe.MASK != "" && pxe.NS1 != "" && pxe.NS2 != "" && pxe.GW != "" {
-		kickstart = "http://" + ksURL + ":" + ksPort + "/kickstart/" + "?name=" + pxe.KSFile + "&os=" + pxe.OS + "&version=" + pxe.Version + "&fqdn=" + pxe.Hostname + "&ip=" + pxe.IP + "&mask=" + pxe.MASK + "&gw=" + pxe.MASK + "&ns1=" + pxe.NS1 + "&ns2=" + pxe.NS2
+		// kickstart = "http://" + ksURL + ":" + ksPort + "/kickstart/" + "?name=" + pxe.KSFile + "&os=" + pxe.OS + "&version=" + pxe.Version + "&fqdn=" + pxe.Hostname + "&ip=" + pxe.IP + "&mask=" + pxe.MASK + "&gw=" + pxe.MASK + "&ns1=" + pxe.NS1 + "&ns2=" + pxe.NS2
+		kickstart = "http://" + ksURL + "/kickstart/" + "?name=" + pxe.KSFile + "&os=" + pxe.OS + "&version=" + pxe.Version + "&fqdn=" + pxe.Hostname + "&ip=" + pxe.IP + "&mask=" + pxe.MASK + "&gw=" + pxe.MASK + "&ns1=" + pxe.NS1 + "&ns2=" + pxe.NS2
 	} else {
-		kickstart = "http://" + ksURL + ":" + ksPort + "/kickstart/" + "?name=" + pxe.KSFile + "&os=" + pxe.OS + "&version=" + pxe.Version + "&fqdn=" + pxe.Hostname
+		// kickstart = "http://" + ksURL + ":" + ksPort + "/kickstart/" + "?name=" + pxe.KSFile + "&os=" + pxe.OS + "&version=" + pxe.Version + "&fqdn=" + pxe.Hostname
+		kickstart = "http://" + ksURL + "/kickstart/" + "?name=" + pxe.KSFile + "&os=" + pxe.OS + "&version=" + pxe.Version + "&fqdn=" + pxe.Hostname
 	}
 
 	err, results := conn.GetBootAction("bootactions", pxe.BootAction)
